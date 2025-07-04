@@ -1,24 +1,25 @@
-const user = document.getElementById("username");
+const user = document.getElementById("username")
 const pass = document.getElementById("inputPassword")
 const btn = document.getElementById("btn")
 
 btn.addEventListener('click',function(x){
     x.preventDefault()
-    //validasi inpur kosong
     const dtuser = user.value.trim()
     const dtpw = pass.value.trim()
-    if(dtuser =="" || dtpw == ""){
+    //validasi inpur kosong
+    
+    if(user =="" || pass == ""){
         alert("data wajib diisi lengkap")
+
     }
+    const data2 =JSON.parse(localStorage.getItem("usernamebaru"))
 
-    const nick = "admin"
-    const psw = "123"
-
-    if(dtuser === nick && dtpw === psw) {
+    if(!data2){
+        alert("belum teRdaftar")
+    }
+    if(data2.usernamebaru===dtuser && data2.userpassbaru === dtpw) {
         alert("login berhasil")
-        setTimeout(function() {
         window.location.href = "index.html"
-         },1000)
     } else {
         alert("login gagal")
     }
