@@ -1,13 +1,21 @@
 
-// ambil data
-let data =  JSON.parse(localStorage.getItem('keranjang')) || [];
-const data2 = document.getElementById("data")
-data.forEach(item=> {
-    console.log(item)
-    data2.innerHTML += `<div class"produk">
-     <img src="${item.gambar}" class="card-img-top" alt="${item.nama}" style="height: 200px; object-fit: cover;">
-    <h3>${item.nama}</h3>
-    <p> harga : ${item.harga.toLocaleString()}</p>
+fetch('/admin/checkout/history')
+  .then(res => res.json())
+  .then(data => {
+    const container = document.getElementById('checkout-list');
+    data.data.forEach((cart, index) => {
+      const div = document.createElement('div');
+      div.innerHTML = `<h3>Pesanan #${index + 1}</h3><ul></ul>`;
+      const ul = div.querySelector('ul');
 
-    </div>`
-});
+      cart.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.nama} - Rp${item.harga}`;
+        ul.appendChild(li);
+      });
+
+      container.appendChild(div);
+    });
+  })
+  .catch(err => console.error('Gagal ambil data:', err));
+
