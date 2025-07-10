@@ -17,5 +17,5 @@ fetch('/admin/checkout/history')
       container.appendChild(div);
     });
   })
-  .catch(err => console.error('Gagal ambil data:', err));
+  .catch(err => console.error('Gagal ambil data checkout:', err));
 
