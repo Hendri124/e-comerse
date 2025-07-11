@@ -3,6 +3,8 @@ const app = express();
 const cors = require('cors');
 const fs = require('fs');
 const PORT = 3000;
+const bcrypt = require('bcryptjs');
+const { use } = require('react');
 
 app.use(cors());
 app.use(express.json());
@@ -42,6 +44,27 @@ app.post('/checkout', (req, res) => {
 app.get('/admin/checkout/history', (req, res) => {
   res.json({ data: chekcutdata });
 });
+
+app.post('/admin/login', (req,res) => {
+  const {username,password} = req.body;
+  if(!fs.existsSync ('usern.json'))  {
+    return res.status(500).json({message: 'flle tidak ditemukan'})
+  }
+  const file = 
+  fs.readFileSync('usern.json','utf-8')
+  const usern = JSON.parse(file)
+
+  const user = usern.find(u => u.username === username)
+
+  if(!user){
+    return res.status(401).json({message : 'usenamme tidal ditemukan'})
+  }9090
+  const isMatch = bcrypt.compareSync(password,user.password) 
+  if(!isMatch){
+    return res.status(401).json({message : 'password tidak valid'})
+  }
+  res.json({message : 'login berhasil',token :'admin-token'})
+  })
 
 // Jalankan server
 app.listen(PORT, () => {
